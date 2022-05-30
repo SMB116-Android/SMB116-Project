@@ -1,13 +1,27 @@
 package com.example.projetandroid;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "user_table")
 public class User {
 
-    int _id;
-    String _email;
-    String _birthDate;
+    @PrimaryKey(autoGenerate = true)
+    private int _id;
+
+    @NonNull
+    @ColumnInfo(name = "email")
+    private String _email;
+
+    @NonNull
+    @ColumnInfo(name = "email")
+    private String _birthDate;
+
 
     public User(){   }
-    public User(int id, String email, String birthDate){
+    public User(int id,@NonNull String email,@NonNull String birthDate){
         this._id = id;
         this._email = email;
         this._birthDate = birthDate;
@@ -21,7 +35,7 @@ public class User {
         return this._email;
     }
 
-    public void setEmail(String email){
+    public void setEmail(@NonNull String email){
         this._email = email;
     }
 
@@ -29,7 +43,7 @@ public class User {
         return this._birthDate;
     }
 
-    public void setBirthDate(String birthDate){
+    public void setBirthDate(@NonNull String birthDate){
         this._birthDate = birthDate;
     }
 }
