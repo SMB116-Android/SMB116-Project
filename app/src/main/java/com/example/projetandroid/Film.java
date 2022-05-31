@@ -6,28 +6,46 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+@Entity(tableName = "film_table")
 public class Film {
+    @ColumnInfo(name = "posterPath")
     public String PosterPath;
+    @ColumnInfo(name = "adult")
     public Boolean Adult;
+    @ColumnInfo(name = "overview")
     public String Overview;
+    @ColumnInfo(name = "releaseDate")
     public String ReleaseDate;
-    public int[] GenreIds;
+    @ColumnInfo(name = "genreIds")
+    public String GenreIds;
+
+    @PrimaryKey
     public int Id;
+    @ColumnInfo(name = "originalTitle")
     public String OriginalTitle;
+    @ColumnInfo(name = "originalLanguage")
     public String OriginalLanguage;
+    @ColumnInfo(name = "Title")
     public String Title;
+    @ColumnInfo(name = "backdropPath")
     public String BackdropPath;
+    @ColumnInfo(name = "popularity")
     public float Popularity;
+    @ColumnInfo(name = "voteCount")
     public int VoteCount;
+    @ColumnInfo(name = "video")
     public Boolean Video;
+    @ColumnInfo(name = "voteAverage")
     public float VoteAverage;
+
+    public Film(){}
 
     public Film(JSONObject jsonObject) {
         this.PosterPath = jsonObject.optString("poster_path");
         this.Adult = jsonObject.optBoolean("adult");
         this.Overview = jsonObject.optString("overview");
         this.ReleaseDate = jsonObject.optString("release_date");
-        //this.GenreIds = jsonObject.getJSONArray("genre_ids");
+        this.GenreIds = jsonObject.optString("genre_ids");
         this.Id = jsonObject.optInt("id");
         this.OriginalTitle = jsonObject.optString("original_title");
         this.OriginalLanguage = jsonObject.optString("original_language");

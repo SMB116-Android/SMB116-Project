@@ -10,6 +10,7 @@ public class RepositoryDb {
 
     private final UserDao userDao;
     private final UserFilmDao userFilmDao;
+    private final FilmDao filmDao;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     private List<User> allusers;
 
@@ -17,6 +18,7 @@ public class RepositoryDb {
         RoomDb db = RoomDb.getDatabase(application);
         userDao = db.userDao();
         userFilmDao = db.userFilmDao();
+        filmDao = db.filmDao();
     }
 
     public List<User> getAllWordsFromDb() {

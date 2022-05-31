@@ -9,41 +9,42 @@ import androidx.room.PrimaryKey;
 public class User {
 
     @PrimaryKey(autoGenerate = true)
-    private int _id;
+    public int _id;
 
     @NonNull
     @ColumnInfo(name = "email")
     private String _email;
 
     @NonNull
-    @ColumnInfo(name = "email")
+    @ColumnInfo(name = "birthDate")
     private String _birthDate;
 
 
-    public User(){   }
-    public User(int id,@NonNull String email,@NonNull String birthDate){
-        this._id = id;
+    public User(@NonNull String email,@NonNull String birthDate){
         this._email = email;
         this._birthDate = birthDate;
     }
 
-    public int getID(){
-        return this._id;
+
+    public int get_id() {
+        return _id;
     }
 
-    public String getEmail(){
-        return this._email;
+    @NonNull
+    public String get_email() {
+        return _email;
     }
 
-    public void setEmail(@NonNull String email){
-        this._email = email;
+    public void set_email(@NonNull String _email) {
+        this._email = _email;
     }
 
-    public String getBirthDate(){
-        return this._birthDate;
+    @NonNull
+    public String get_birthDate() {
+        return _birthDate;
     }
 
-    public void setBirthDate(@NonNull String birthDate){
-        this._birthDate = birthDate;
+    public void set_birthDate(@NonNull String _birthDate) {
+        this._birthDate = _birthDate;
     }
 }

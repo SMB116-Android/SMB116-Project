@@ -6,13 +6,14 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-@Database(entities = {User.class, Film.class}, version = 1, exportSchema = false)
+@Database(entities = {User.class, Film.class, UserFilm.class}, version = 1, exportSchema = false)
 public abstract class RoomDb extends RoomDatabase {
 
     private static RoomDb INSTANCE;
 
     public abstract UserDao userDao();
     public abstract UserFilmDao userFilmDao();
+    public abstract FilmDao filmDao();
 
     public static RoomDb getDatabase(final Context context) {
         if (INSTANCE == null) {

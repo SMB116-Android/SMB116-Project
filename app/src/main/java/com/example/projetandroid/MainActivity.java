@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkCapabilities;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -21,8 +23,7 @@ public class MainActivity<connectivityManager> extends AppCompatActivity {
     Repository repository = null;
     private static final String TAG = "MainActivity";
     private ConnectivityManager connectivityManager = null;
-    EditText email, password, BirthDate;
-    Button signup, signin;
+
 
     private void checkConnectionForActiveNetwork(@Nullable Network network) {
         if (network != null) {
@@ -58,7 +59,6 @@ public class MainActivity<connectivityManager> extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
         repository = new Repository();
 
@@ -67,24 +67,10 @@ public class MainActivity<connectivityManager> extends AppCompatActivity {
         connectivityManager.registerDefaultNetworkCallback(networkCallback);
         fetchFilmsList();
 
-        email = findViewById(R.id.editTextEmailLogin);
-        password = findViewById(R.id.editTextPasswordLogin);
-        signup = findViewById(R.id.registerButton);
-        signin = findViewById(R.id.loginButton);
+        Intent signIn = new Intent(MainActivity.this, LayoutLoginActivity.class);
+        startActivity(signIn);
 
-        signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
-
-        signin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
     }
 
     private void fetchFilmsList() {

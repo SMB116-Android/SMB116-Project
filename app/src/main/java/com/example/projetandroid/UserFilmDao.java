@@ -6,15 +6,16 @@ import androidx.room.Query;
 
 import java.util.List;
 
+@Dao
 public interface UserFilmDao {
 
     @Insert
-    void insert(Film film);
+    void insert(User user, Film film);
 
-    @Query("DELETE FROM user_table")
-    void deleteAll();
+    @Query("DELETE FROM userFilm_table WHERE idUser = :idUser AND idFilm = :idFilm")
+    void deleteFilm(int idUser,int idFilm);
 
-    @Query("SELECT * from user_table ORDER BY _id ASC")
-    List<User> getAllWords();
+    @Query("SELECT idFilm from userFilm_table ORDER BY idFilm ASC")
+    List<Integer> getAllUserFilm();
 
 }
