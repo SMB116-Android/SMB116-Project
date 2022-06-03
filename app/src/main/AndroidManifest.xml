@@ -13,10 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ProjetAndroid">
         <activity
-            android:name=".LayoutRegisterActivity"
+            android:name=".RegisterFragment"
             android:exported="false" />
         <activity
-            android:name=".LayoutLoginActivity"
+            android:name=".LoginFragment"
             android:exported="false" />
         <activity
             android:name=".LoginActivity"

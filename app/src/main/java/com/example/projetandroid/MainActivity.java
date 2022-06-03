@@ -11,10 +11,10 @@ import android.net.Network;
 import android.net.NetworkCapabilities;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
+
+import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
 
@@ -59,6 +59,12 @@ public class MainActivity<connectivityManager> extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        initializeBottomNavigationView();
+
+        BadgeDrawable badge = bottomNavigationView.getOrCreateBadge(R.id.trending);
+        badge.setVisible(true);
 
         repository = new Repository();
 
@@ -66,9 +72,6 @@ public class MainActivity<connectivityManager> extends AppCompatActivity {
         Network currentNetwork = connectivityManager.getActiveNetwork();
         connectivityManager.registerDefaultNetworkCallback(networkCallback);
         fetchFilmsList();
-
-        Intent signIn = new Intent(MainActivity.this, LayoutLoginActivity.class);
-        startActivity(signIn);
 
 
     }
@@ -86,4 +89,31 @@ public class MainActivity<connectivityManager> extends AppCompatActivity {
             }
         });
     }
+
+    private BottomNavigationView bottomNavigationView;
+    private TextView textView;
+
+    private void initializeBottomNavigationView() {
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+
+            if (id == R.id.trending) {
+                setContentView(R.layout.fragment_tending);
+                textView.setText(R.string.Trending);
+            } else if (id == R.id.movies) {
+                setContentView(R.layout.fragment_home);
+                textView.setText(R.string.Movies);
+            } else if (id == R.id.manageAccount) {
+                setContentView(R.layout.fragment_notifications);
+                textView.setText(R.string.ManageAccount);
+            }
+
+            return true;
+        });
+
+        bottomNavigationView.setSelectedItemId(R.id.trending);
+    }
+
 }
