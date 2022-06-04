@@ -1,6 +1,8 @@
-package com.example.projetandroid;
+package com.example.projetandroid.DB;
 
 import android.app.Application;
+
+import com.example.projetandroid.User;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;

@@ -1,28 +1,29 @@
-package com.example.projetandroid;
+package com.example.projetandroid.Fragments;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.example.projetandroid.R;
 
 public class RegisterFragment extends Fragment {
 
     EditText email, password, birthDate;
     Button signup;
-    TextView haveAccount;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
+        return inflater.inflate(R.layout.fragment_register, container, false);
     }
 
     @Override
@@ -33,14 +34,10 @@ public class RegisterFragment extends Fragment {
         password = view.findViewById(R.id.editTextPasswordLogin);
         //birthDate = findViewById(R.id.)
         signup = view.findViewById(R.id.registerButton);
-        haveAccount = view.findViewById(R.id.haveAccountButton);
 
         signup.setOnClickListener(v -> {
-            Navigation.findNavController(view).navigate(R.id.loginFragment);
+
         });
 
-        haveAccount.setOnClickListener(v -> {
-            Navigation.findNavController(view).navigate(R.id.loginFragment);
-        });
     }
 }

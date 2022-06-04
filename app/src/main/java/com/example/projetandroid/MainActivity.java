@@ -1,119 +1,68 @@
 package com.example.projetandroid;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 
-import android.content.Context;
-import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.Network;
-import android.net.NetworkCapabilities;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.google.android.material.badge.BadgeDrawable;
+import com.example.projetandroid.Fragments.LoginFragment;
+import com.example.projetandroid.Fragments.RegisterFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
+import com.example.projetandroid.Fragments.DatePickerFragment;
 
-import java.util.List;
+public class MainActivity extends AppCompatActivity {
 
-public class MainActivity<connectivityManager> extends AppCompatActivity {
+    BottomNavigationView bottomNavigationView;
 
-    Repository repository = null;
-    private static final String TAG = "MainActivity";
-    private ConnectivityManager connectivityManager = null;
-
-
-    private void checkConnectionForActiveNetwork(@Nullable Network network) {
-        if (network != null) {
-            NetworkCapabilities capabilities = connectivityManager.getNetworkCapabilities(network);
-            if (capabilities != null) {
-                // 2' - Modifier le boolean `hasConnection` si nous avons du transport Wifi OU Cellular
-                if (    capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
-                        capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)){
-                }
-            }
-        }
-    }
-
-    private final ConnectivityManager.NetworkCallback networkCallback = new ConnectivityManager.NetworkCallback() {
-        @Override
-        public void onAvailable(@NonNull Network network) {
-            super.onAvailable(network);
-            checkConnectionForActiveNetwork(connectivityManager.getActiveNetwork());
-        }
-
-        @Override
-        public void onLost(@NonNull Network network) {
-            super.onLost(network);
-            checkConnectionForActiveNetwork(connectivityManager.getActiveNetwork());
-        }
-
-        @Override
-        public void onCapabilitiesChanged(@NonNull Network network, @NonNull NetworkCapabilities networkCapabilities) {
-            super.onCapabilitiesChanged(network, networkCapabilities);
-        }
-    };
+    LoginFragment loginFragment = new LoginFragment();
+    RegisterFragment registerFragment = new RegisterFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        initializeBottomNavigationView();
+        bottomNavigationView = findViewById(R.id.bottom_navigation_login_register);
 
-        BadgeDrawable badge = bottomNavigationView.getOrCreateBadge(R.id.trending);
-        badge.setVisible(true);
+        getSupportFragmentManager().beginTransaction().replace(R.id.containerLoginRegister, loginFragment).commit();
 
-        repository = new Repository();
-
-        connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        Network currentNetwork = connectivityManager.getActiveNetwork();
-        connectivityManager.registerDefaultNetworkCallback(networkCallback);
-        fetchFilmsList();
-
-
-    }
-
-    private void fetchFilmsList() {
-        repository.getFilmList(new FilmListCallBack() {
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
-            public void onSuccess(List<Film> todoList) {
-                Log.d(TAG, "onSuccess: " + todoList);
-            }
-
-            @Override
-            public void onFailure(String errorMsg) {
-                Log.e(TAG, "onFailure: " + errorMsg);
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.login:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.containerLoginRegister, loginFragment).commit();
+                        return true;
+                    case R.id.register:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.containerLoginRegister, registerFragment).commit();
+                        return true;
+                }
+                return false;
             }
         });
+
+    }
+    public void datePicker(View v)
+    {
+        displayDatePicker();
     }
 
-    private BottomNavigationView bottomNavigationView;
-    private TextView textView;
-
-    private void initializeBottomNavigationView() {
-        bottomNavigationView = findViewById(R.id.bottom_navigation);
-
-        bottomNavigationView.setOnItemSelectedListener(item -> {
-            int id = item.getItemId();
-
-            if (id == R.id.trending) {
-                setContentView(R.layout.fragment_tending);
-                textView.setText(R.string.Trending);
-            } else if (id == R.id.movies) {
-                setContentView(R.layout.fragment_home);
-                textView.setText(R.string.Movies);
-            } else if (id == R.id.manageAccount) {
-                setContentView(R.layout.fragment_notifications);
-                textView.setText(R.string.ManageAccount);
-            }
-
-            return true;
-        });
-
-        bottomNavigationView.setSelectedItemId(R.id.trending);
+    private void displayDatePicker() {
+        DialogFragment fragment = new DatePickerFragment();
+        fragment.show(getSupportFragmentManager(), "datePicker");
     }
+
+    public void setSelectedDate(int year, int month, int dayOfMonth) {
+        TextView textView = (TextView) findViewById(R.id.birthDateLbl);
+        textView.setText(dayOfMonth + "/" + month + "/" + year);
+    }
+
+
 
 }
