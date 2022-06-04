@@ -1,50 +1,51 @@
-package com.example.projetandroid.DB;
+package com.example.projetandroid.DB.User;
 
 import android.app.Application;
 
-import com.example.projetandroid.User;
+import com.example.projetandroid.DB.Film.FilmDao;
+import com.example.projetandroid.DB.RoomDb;
+import com.example.projetandroid.DB.User_Film.UserFilmDao;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class RepositoryDb {
+public class UserRepository {
 
     private final UserDao userDao;
     private final UserFilmDao userFilmDao;
-    private final FilmDao filmDao;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
-    private List<User> allusers;
+    private User user;
 
-    RepositoryDb(Application application) {
+    public UserRepository(Application application) {
         RoomDb db = RoomDb.getDatabase(application);
         userDao = db.userDao();
         userFilmDao = db.userFilmDao();
-        filmDao = db.filmDao();
     }
 
-    public List<User> getAllWordsFromDb() {
-        return allusers;
+    public User getUserFromDb() {
+        return user;
     }
 
-    public void getAllWordsFromDb(OnQueryCompletedListener listener) {
+    public void getUserFromDb(String email, OnQueryCompletedListener listener) {
         executorService.submit(() -> {
-            allusers = userDao.getAllWords();
+            user = userDao.getUserByEmail(email);
             listener.onQueryComplete();
         });
     }
 
-    public void insertWord(User user, OnQueryCompletedListener listener) {
+
+    public void insertUser(User user, OnQueryCompletedListener listener) {
         executorService.submit(() -> {
             userDao.insert(user);
             listener.onQueryComplete();
         });
     }
 
-    public void deleteAllWords(OnQueryCompletedListener listener) {
+    public void updatePasswordUser(String password, OnQueryCompletedListener listener) {
         executorService.submit(() -> {
-            userDao.deleteAll();
-            allusers.clear();
+            user.set_password(password);
+            userDao.update(user);
             listener.onQueryComplete();
         });
     }

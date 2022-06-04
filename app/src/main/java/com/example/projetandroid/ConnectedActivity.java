@@ -12,8 +12,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.example.projetandroid.DB.Film.Film;
+import com.example.projetandroid.DB.Film.FilmRepository;
 import com.example.projetandroid.Fragments.AccountFragment;
-import com.example.projetandroid.Fragments.MovieFragment;
+import com.example.projetandroid.Fragments.FilmFragment;
 import com.example.projetandroid.Fragments.TrendingFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -28,7 +30,7 @@ public class ConnectedActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
 
     TrendingFragment trendingFragment = new TrendingFragment();
-    MovieFragment movieFragment = new MovieFragment();
+    FilmFragment filmFragment = new FilmFragment();
     AccountFragment accountFragment = new AccountFragment();
 
 
@@ -81,7 +83,7 @@ public class ConnectedActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, trendingFragment).commit();
                         return true;
                     case R.id.movie:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, movieFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, filmFragment).commit();
                         return true;
                     case R.id.manageAccount:
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, accountFragment).commit();
@@ -111,6 +113,19 @@ public class ConnectedActivity extends AppCompatActivity {
             public void onFailure(String errorMsg) {
                 Log.e(TAG, "onFailure: " + errorMsg);
             }
+        });
+    }
+
+    private void initializeAdapter() {
+        wordsAdapter = new WordsAdapter(adapterList);
+    }
+
+    private void getAllWords() {
+        FilmRepository.ge(() -> {
+            this.runOnUiThread(() -> {
+                adapterList.addAll(wordRepository.getAllWordsFromDb());
+                wordsAdapter.notifyItemInserted(adapterList.size());
+            });
         });
     }
 

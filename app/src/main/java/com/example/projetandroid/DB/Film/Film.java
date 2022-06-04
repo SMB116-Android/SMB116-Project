@@ -1,4 +1,4 @@
-package com.example.projetandroid;
+package com.example.projetandroid.DB.Film;
 
 import org.json.JSONObject;
 import androidx.annotation.NonNull;

@@ -1,5 +1,7 @@
 package com.example.projetandroid;
 
+import com.example.projetandroid.DB.Film.Film;
+
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;

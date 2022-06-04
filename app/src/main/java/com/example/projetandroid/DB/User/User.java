@@ -1,4 +1,4 @@
-package com.example.projetandroid;
+package com.example.projetandroid.DB.User;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
@@ -9,6 +9,7 @@ import androidx.room.PrimaryKey;
 public class User {
 
     @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
     public int _id;
 
     @NonNull
@@ -19,10 +20,15 @@ public class User {
     @ColumnInfo(name = "birthDate")
     private String _birthDate;
 
+    @NonNull
+    @ColumnInfo(name = "password")
+    private String _password;
 
-    public User(@NonNull String email,@NonNull String birthDate){
+
+    public User(@NonNull String email,@NonNull String birthDate, @NonNull String password){
         this._email = email;
         this._birthDate = birthDate;
+        this._password = password;
     }
 
 
@@ -46,5 +52,14 @@ public class User {
 
     public void set_birthDate(@NonNull String _birthDate) {
         this._birthDate = _birthDate;
+    }
+
+    @NonNull
+    public String get_password() {
+        return _password;
+    }
+
+    public void set_password(@NonNull String _password) {
+        this._password = _password;
     }
 }

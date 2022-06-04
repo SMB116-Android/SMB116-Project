@@ -6,9 +6,12 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.example.projetandroid.Film;
-import com.example.projetandroid.User;
-import com.example.projetandroid.UserFilm;
+import com.example.projetandroid.DB.Film.FilmDao;
+import com.example.projetandroid.DB.User.UserDao;
+import com.example.projetandroid.DB.Film.Film;
+import com.example.projetandroid.DB.User.User;
+import com.example.projetandroid.DB.User_Film.UserFilmDao;
+import com.example.projetandroid.DB.User_Film.UserFilm;
 
 @Database(entities = {User.class, Film.class, UserFilm.class}, version = 1, exportSchema = false)
 public abstract class RoomDb extends RoomDatabase {
@@ -24,7 +27,7 @@ public abstract class RoomDb extends RoomDatabase {
             synchronized (RoomDb.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                            RoomDb.class, "word_database")
+                            RoomDb.class, "trending_database")
                             .fallbackToDestructiveMigration()
                             .build();
                 }

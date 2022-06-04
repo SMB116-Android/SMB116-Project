@@ -1,4 +1,4 @@
-package com.example.projetandroid;
+package com.example.projetandroid.DB.User_Film;
 
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;

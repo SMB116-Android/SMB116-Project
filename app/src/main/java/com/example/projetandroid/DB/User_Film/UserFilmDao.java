@@ -1,11 +1,11 @@
-package com.example.projetandroid.DB;
+package com.example.projetandroid.DB.User_Film;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.example.projetandroid.Film;
-import com.example.projetandroid.User;
+import com.example.projetandroid.DB.Film.Film;
+import com.example.projetandroid.DB.User.User;
 
 import java.util.List;
 
