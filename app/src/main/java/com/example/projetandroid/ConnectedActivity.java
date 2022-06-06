@@ -116,17 +116,5 @@ public class ConnectedActivity extends AppCompatActivity {
         });
     }
 
-    private void initializeAdapter() {
-        wordsAdapter = new WordsAdapter(adapterList);
-    }
-
-    private void getAllWords() {
-        FilmRepository.ge(() -> {
-            this.runOnUiThread(() -> {
-                adapterList.addAll(wordRepository.getAllWordsFromDb());
-                wordsAdapter.notifyItemInserted(adapterList.size());
-            });
-        });
-    }
 
 }

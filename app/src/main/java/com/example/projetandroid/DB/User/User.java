@@ -3,6 +3,7 @@ package com.example.projetandroid.DB.User;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "user_table")
@@ -17,15 +18,19 @@ public class User {
     private String _email;
 
     @NonNull
-    @ColumnInfo(name = "birthDate")
-    private String _birthDate;
-
-    @NonNull
     @ColumnInfo(name = "password")
     private String _password;
 
+    @NonNull
+    @ColumnInfo(name = "birthDate")
+    private String _birthDate;
 
-    public User(@NonNull String email,@NonNull String birthDate, @NonNull String password){
+    @Ignore
+    public User(){
+    }
+
+
+    public User(@NonNull String email,@NonNull String password, @NonNull String birthDate){
         this._email = email;
         this._birthDate = birthDate;
         this._password = password;

@@ -3,16 +3,19 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/drawable-v24/circle.xml" value="0.196" />
         <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/drawable-v24/ic_account_circle.xml" value="0.196" />
         <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/drawable-v24/ic_account_plus.xml" value="0.196" />
+        <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/drawable-v24/ic_launcher_background.xml" value="0.196" />
         <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.196" />
+        <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/drawable-v24/ic_settings.xml" value="0.196" />
         <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/drawable/ic_launcher_background.xml" value="0.196" />
         <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/drawable/ic_login_bk.xml" value="0.196" />
         <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/drawable/login_shape_bk.xml" value="0.196" />
         <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/layout/activity_connected.xml" value="0.31023550724637683" />
         <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/layout/activity_login.xml" value="0.18802083333333333" />
         <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/layout/activity_main.xml" value="0.18802083333333333" />
-        <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/layout/fragment_account.xml" value="0.18802083333333333" />
+        <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/layout/fragment_account.xml" value="0.33" />
         <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/layout/fragment_login.xml" value="0.18802083333333333" />
         <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/layout/fragment_movie.xml" value="0.18802083333333333" />
         <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/layout/fragment_register.xml" value="0.33" />
