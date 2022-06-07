@@ -9,6 +9,6 @@ import java.util.List;
 @Dao
 public interface FilmDao {
 
-    @Query("SELECT * from film_table ORDER BY releaseDate DESC")
+    @Query("SELECT * from film_table")
     List<Film> getAllFilm();
 }

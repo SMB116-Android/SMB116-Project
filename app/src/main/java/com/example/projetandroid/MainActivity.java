@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         email = preferences.getString(EMAIL_KEY, "");
 
-        automaticUserLogin();
+        //automaticUserLogin();
 
         bottomNavigationView = findViewById(R.id.bottom_navigation_login_register);
 
@@ -108,6 +108,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void automaticUserLogin() {
         if(email != ""){
+            login(email);
             Toast.makeText(MainActivity.this, "Data has been saved successfully!   : "+email, Toast.LENGTH_LONG).show();
         }else{
             Toast.makeText(MainActivity.this, "Unsucessful "+email, Toast.LENGTH_LONG).show();
@@ -171,6 +172,16 @@ public class MainActivity extends AppCompatActivity {
         }else{
             return false;
         }
+
+    }
+
+    public void login(String email) {
+
+        User user = new User();
+        user = userViewModel.getUserByEmail(email);
+        userViewModel.getCurrentUser().setValue(user);
+        Intent intent = new Intent(this, ConnectedActivity.class);
+        startActivity(intent);
 
     }
 

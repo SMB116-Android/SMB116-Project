@@ -19,4 +19,6 @@
     <string name="Trending">Trendings</string>
     <string name="MyMovies">My movies</string>
     <string name="ManageAccount">Account</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
