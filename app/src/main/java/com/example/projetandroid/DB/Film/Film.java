@@ -19,13 +19,26 @@ public class Film {
     private String date;
     @ColumnInfo(name = "overview")
     private String overview;
+    @ColumnInfo(name = "vote_average")
+    private Float voteAverage;
 
     public Film(){}
 
-    public Film(String id, String name, String img){
+    public Film(String id, String name, String img, float voteAverage){
         this.id = id;
         this.name=name;
         this.img = img;
+        this.voteAverage = voteAverage;
+    }
+
+    public String getShortOverview(){
+        if(overview.length() >= 105){
+            String textTooLong = overview;
+            textTooLong = textTooLong.substring(0, Math.min(textTooLong.length(), 100));
+            textTooLong += "...";
+            return textTooLong;
+        }
+        return overview;
     }
 
 
@@ -67,5 +80,13 @@ public class Film {
 
     public void setOverview(String overview) {
         this.overview = overview;
+    }
+
+    public Float getVoteAverage() {
+        return voteAverage;
+    }
+
+    public void setVoteAverage(Float voteAverage) {
+        this.voteAverage = voteAverage;
     }
 }

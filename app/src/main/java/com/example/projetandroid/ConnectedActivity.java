@@ -37,7 +37,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConnectedActivity extends AppCompatActivity {
-
     private static final String TAG = "ConnectedActivity";
     BottomNavigationView bottomNavigationView;
 

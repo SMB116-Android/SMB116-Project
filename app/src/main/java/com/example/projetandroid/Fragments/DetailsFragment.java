@@ -3,23 +3,20 @@ package com.example.projetandroid.Fragments;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
+import android.view.ContentInfo;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.projetandroid.Adaptery;
+import com.bumptech.glide.Glide;
 import com.example.projetandroid.DB.Film.Film;
-import com.example.projetandroid.DB.User.User;
 import com.example.projetandroid.R;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,39 +26,46 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
+public class DetailsFragment extends Fragment {
+    private static String JSON_URL_Debut = "https://api.themoviedb.org/3/movie/";
+    private static String JSON_URL = "";
+    private static String JSON_URL_Suite = "?api_key=fc1e00e38c74a357b4c70550778985e7";
+    private String movie_id;
 
-public class TrendingFragment extends Fragment {
-
-    // https://run.mocky.io/v3/79f722b0-a730-42a0-99aa-36029861f115
-    // https://api.themoviedb.org/3/movie/popular?api_key=fc1e00e38c74a357b4c70550778985e7
-    private static String JSON_URL = "https://api.themoviedb.org/3/movie/popular?api_key=fc1e00e38c74a357b4c70550778985e7";
-
-    View view;
-    List<Film> movieList;
-    RecyclerView recyclerView;
+    Film mFilm;
+    TextView details_name;
+    TextView details_overview;
+    ImageView datils_img;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_details, container, false);
 
-        view = inflater.inflate(R.layout.fragment_trending, container, false);
+        Bundle extras = getActivity().getIntent().getExtras();
+
+        if(extras.getString("movie_id") != null){
+            movie_id = extras.getString("movie_id");
+        }else{
+            Log.i("DetailsFragment", "id non trouvée");
+            movie_id = "338953";
+        }
+
+        JSON_URL = JSON_URL_Debut+movie_id+JSON_URL_Suite;
+
+        mFilm = new Film();
+        details_name = view.findViewById(R.id.details_name_txt);
+        details_overview = view.findViewById(R.id.details_overview_txt);
+        datils_img = view.findViewById(R.id.imageView2);
+
+        GetData getData = new GetData();
+        getData.execute();
 
         return view;
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        movieList = new ArrayList<>();
-        recyclerView = view.findViewById(R.id.recyclerView);
-
-        GetData getData = new GetData();
-        getData.execute();
-    }
 
     public class GetData extends AsyncTask<String, String, String> {
         @Override
@@ -104,34 +108,19 @@ public class TrendingFragment extends Fragment {
         protected void onPostExecute(String s){
             try{
                 JSONObject jsonObject = new JSONObject(s);
-                JSONArray jsonArray = jsonObject.getJSONArray("results");
+                Film film = new Film();
+                film.setId(jsonObject.getString("id"));
+                film.setName(jsonObject.getString("title"));
+                film.setOverview(jsonObject.getString("overview"));
+                film.setImg(jsonObject.getString("poster_path"));
 
-                for(int i = 0; i < jsonArray.length(); i++){
-                    JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                    Film model = new Film();
-                    model.setId(jsonObject1.getString("id"));
-                    model.setName(jsonObject1.getString("title"));
-                    model.setImg(jsonObject1.getString("poster_path"));
-                    model.setDate(jsonObject1.getString("release_date"));
-                    model.setOverview(jsonObject1.getString("overview"));
-                    model.setVoteAverage((float) jsonObject1.getDouble("vote_average"));
-
-                    movieList.add(model);
-                }
+                details_name.setText(film.getName());
+                details_overview.setText(film.getOverview());
+//                Glide.with(getApplicationContext()).load("https://image.tmdb.org/t/p/w500"+model.getImg()).into(datils_img);
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-            PutDataIntoRecyclerView(movieList);
         }
-    }
-
-    private void PutDataIntoRecyclerView(List<Film> movieList){
-
-        Adaptery adaptery = new Adaptery(view.getContext(), movieList);
-        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-
-        recyclerView.setAdapter(adaptery);
     }
 }

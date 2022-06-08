@@ -32,7 +32,6 @@ import com.google.android.material.navigation.NavigationBarView;
 import com.example.projetandroid.Fragments.DatePickerFragment;
 
 public class MainActivity extends AppCompatActivity {
-
     BottomNavigationView bottomNavigationView;
 
     public static String CURRENT_USER;
@@ -66,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
 
         userViewModel.getCurrentUser().observe(this, setUserObserver);
 
-
         preferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
 
         email = preferences.getString(EMAIL_KEY, "");
@@ -91,11 +89,6 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-
-
-
-
     }
 
     @Override
@@ -132,7 +125,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sendDataToLoginFragment(User user) {
-
         Bundle bundle=new Bundle();
         bundle.putString("email",user.get_email());
         bundle.putString("password",user.get_password());
@@ -148,19 +140,14 @@ public class MainActivity extends AppCompatActivity {
     // -------------------
 
     private void configureViewModel() {
-
         this.userViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance(this)).get(UserViewModel.class);
-
     }
 
     public void insertUser(User user) {
-
         userViewModel.insertUser(user);
-
     }
 
     public boolean login(String email, String password) {
-
         if(userViewModel.login(email, password)){
             User user = new User();
             user = userViewModel.getUserByEmail(email);
@@ -176,7 +163,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void login(String email) {
-
         User user = new User();
         user = userViewModel.getUserByEmail(email);
         userViewModel.getCurrentUser().setValue(user);
@@ -187,11 +173,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void updateView(User user) {
-
         if (user == null) return;
-
-
-
     }
 
 
