@@ -3,10 +3,10 @@ package com.example.projetandroid.Fragments;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
-import android.view.ContentInfo;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.projetandroid.Adaptery;
 import com.example.projetandroid.DB.Film.Film;
 import com.example.projetandroid.R;
 
@@ -37,13 +38,21 @@ public class DetailsFragment extends Fragment {
     TextView details_name;
     TextView details_overview;
     ImageView datils_img;
+    View view;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        movie_id = getArguments().getString("ID");
+
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_details, container, false);
-
+        view = inflater.inflate(R.layout.fragment_details, container, false);
+        /*
         Bundle extras = getActivity().getIntent().getExtras();
 
         if(extras.getString("movie_id") != null){
@@ -52,6 +61,8 @@ public class DetailsFragment extends Fragment {
             Log.i("DetailsFragment", "id non trouvée");
             movie_id = "338953";
         }
+
+         */
 
         JSON_URL = JSON_URL_Debut+movie_id+JSON_URL_Suite;
 
@@ -116,7 +127,7 @@ public class DetailsFragment extends Fragment {
 
                 details_name.setText(film.getName());
                 details_overview.setText(film.getOverview());
-//                Glide.with(getApplicationContext()).load("https://image.tmdb.org/t/p/w500"+model.getImg()).into(datils_img);
+                Glide.with(view.getContext()).load("https://image.tmdb.org/t/p/w500"+film.getImg()).into(datils_img);
 
             } catch (JSONException e) {
                 e.printStackTrace();

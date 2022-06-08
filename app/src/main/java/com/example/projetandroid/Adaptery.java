@@ -1,7 +1,7 @@
 package com.example.projetandroid;
 
 import android.content.Context;
-import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,10 +25,12 @@ import java.util.List;
 public class Adaptery extends RecyclerView.Adapter<Adaptery.MyViewHolder> {
     private Context mContext;
     private List<Film> mData;
+    private OnFilmListener mCommunicator;
 
-    public Adaptery(Context mContext, List<Film> mData) {
+    public Adaptery(Context mContext, List<Film> mData, OnFilmListener communication) {
         this.mContext = mContext;
         this.mData = mData;
+        mCommunicator=communication;
     }
 
     @NonNull
@@ -38,7 +40,7 @@ public class Adaptery extends RecyclerView.Adapter<Adaptery.MyViewHolder> {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         v = inflater.inflate(R.layout.movie_item, parent, false);
 
-        return new MyViewHolder(v);
+        return new MyViewHolder(v, mCommunicator);
     }
 
     @Override
@@ -54,8 +56,10 @@ public class Adaptery extends RecyclerView.Adapter<Adaptery.MyViewHolder> {
         RequestOptions requestOptions = new RequestOptions();
         requestOptions = requestOptions.transforms(new CenterCrop(), new RoundedCorners(20));
         Glide.with(mContext).load("https://image.tmdb.org/t/p/w500"+mData.get(position).getImg()).apply(requestOptions).into(holder.img);
-        Intent i = new Intent(mContext, DetailsFragment.class);
-        i.putExtra("movie_id", holder.id.getId());
+        DetailsFragment fragmentB=new DetailsFragment();
+        Bundle bundle=new Bundle();
+        bundle.putString("ID",holder.id.getText().toString());
+        fragmentB.setArguments(bundle);
         //holder.context.startActivity(i);
     }
 
@@ -72,10 +76,11 @@ public class Adaptery extends RecyclerView.Adapter<Adaptery.MyViewHolder> {
         TextView date;
         TextView overview;
         RatingBar ratingBar;
+        OnFilmListener mOnFilmListener;
 
         private Context context;
 
-        public MyViewHolder(@NonNull View itemView) {
+        public MyViewHolder(@NonNull View itemView, OnFilmListener Communicator) {
             super(itemView);
             id = itemView.findViewById(R.id.id_txt);
             name = itemView.findViewById(R.id.tvName);
@@ -84,15 +89,19 @@ public class Adaptery extends RecyclerView.Adapter<Adaptery.MyViewHolder> {
             overview = itemView.findViewById(R.id.tvOverview);
             ratingBar = itemView.findViewById(R.id.ratingBar);
             context = itemView.getContext();
+            mOnFilmListener=Communicator;
             itemView.setClickable(true);
             itemView.setOnClickListener(this);
+
         }
 
         @Override
         public void onClick(View view) {
-            Intent i = new Intent(context, DetailsFragment.class);
-            i.putExtra("movie_id",id.getText());
-            context.startActivity(i);
+            mOnFilmListener.onFilmClick(getAdapterPosition(),mData.get(getAdapterPosition()).getId());
         }
+    }
+
+    public interface OnFilmListener{
+        void onFilmClick(int position, String id);
     }
 }
