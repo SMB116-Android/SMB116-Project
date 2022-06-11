@@ -8,7 +8,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "userFilm_table")
 public class UserFilm {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     public int _idUserFilm;
 
     @NonNull

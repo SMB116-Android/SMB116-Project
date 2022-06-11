@@ -1,9 +1,11 @@
 package com.example.projetandroid.Fragments;
 
+import android.app.ActionBar;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.ShareCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -11,12 +13,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.projetandroid.Adaptery;
+import com.example.projetandroid.ConnectedActivity;
 import com.example.projetandroid.DB.Film.Film;
+import com.example.projetandroid.DB.User.User;
+import com.example.projetandroid.MainActivity;
 import com.example.projetandroid.R;
+import com.example.projetandroid.ViewModel.UserViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,11 +42,13 @@ public class DetailsFragment extends Fragment {
     private static String JSON_URL = "";
     private static String JSON_URL_Suite = "?api_key=fc1e00e38c74a357b4c70550778985e7";
     private String movie_id;
+    private UserViewModel userViewModel;
 
+    FloatingActionButton share, add, back;
     Film mFilm;
-    TextView details_name;
-    TextView details_overview;
+    TextView details_name, details_overview, details_date;
     ImageView datils_img;
+    RatingBar details_ratingBar;
     View view;
 
     @Override
@@ -50,19 +61,50 @@ public class DetailsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         view = inflater.inflate(R.layout.fragment_details, container, false);
-        /*
-        Bundle extras = getActivity().getIntent().getExtras();
+        this.userViewModel = UserViewModel.getInstance();
 
-        if(extras.getString("movie_id") != null){
-            movie_id = extras.getString("movie_id");
-        }else{
-            Log.i("DetailsFragment", "id non trouvée");
-            movie_id = "338953";
-        }
+        ConnectedActivity connectedActivity = (ConnectedActivity) getActivity();
 
-         */
+
+        share = view.findViewById(R.id.floatingActionShare);
+        add = view.findViewById(R.id.floatingActionAdd);
+        back = view.findViewById(R.id.floatingActionBack);
+
+        share.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                onShareClick();
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                connectedActivity.returnToMenu();
+            }
+        });
+
+        add.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                if(!userViewModel.userFilmAlreadyExists(userViewModel.getCurrentUser().get_id(), Integer.parseInt(mFilm.getId()))){
+                    userViewModel.insertUserFilm(userViewModel.getCurrentUser().get_id(), Integer.parseInt(mFilm.getId()));
+                    Toast.makeText(connectedActivity, "Film added !", Toast.LENGTH_LONG).show();
+                    connectedActivity.returnToMenu();
+                }else{
+                    Toast.makeText(connectedActivity, "Film already added !", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
 
         JSON_URL = JSON_URL_Debut+movie_id+JSON_URL_Suite;
 
@@ -70,6 +112,8 @@ public class DetailsFragment extends Fragment {
         details_name = view.findViewById(R.id.details_name_txt);
         details_overview = view.findViewById(R.id.details_overview_txt);
         datils_img = view.findViewById(R.id.imageView2);
+        details_date = view.findViewById(R.id.details_date);
+        details_ratingBar = view.findViewById(R.id.details_ratingBar);
 
         GetData getData = new GetData();
         getData.execute();
@@ -124,14 +168,31 @@ public class DetailsFragment extends Fragment {
                 film.setName(jsonObject.getString("title"));
                 film.setOverview(jsonObject.getString("overview"));
                 film.setImg(jsonObject.getString("poster_path"));
+                film.setDate(jsonObject.getString("release_date"));
+                film.setVoteAverage((float) jsonObject.getDouble("vote_average"));
 
                 details_name.setText(film.getName());
                 details_overview.setText(film.getOverview());
                 Glide.with(view.getContext()).load("https://image.tmdb.org/t/p/w500"+film.getImg()).into(datils_img);
+                details_date.setText(film.getDate());
+                details_ratingBar.setRating(film.getVoteAverage());
+
+                mFilm = film;
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void onShareClick() {
+        String txt = "Name : " +mFilm.getName() + "\n Overview : "+ mFilm.getOverview() + "\n Date : " +  mFilm.getDate() + "\n Image : " + mFilm.getImg();
+        String mimeType = "text/plain";
+        new ShareCompat.IntentBuilder(view.getContext())
+                .setType(mimeType)
+                .setChooserTitle("Share this text with: ")
+                .setText(txt)
+                .startChooser();
+
     }
 }

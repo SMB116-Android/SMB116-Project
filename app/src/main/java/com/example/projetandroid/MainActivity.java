@@ -1,23 +1,15 @@
 package com.example.projetandroid;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.Editable;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +18,6 @@ import com.example.projetandroid.DB.User.UserRepository;
 import com.example.projetandroid.Fragments.LoginFragment;
 import com.example.projetandroid.Fragments.RegisterFragment;
 import com.example.projetandroid.ViewModel.UserViewModel;
-import com.example.projetandroid.ViewModel.ViewModelFactory;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.example.projetandroid.Fragments.DatePickerFragment;
@@ -34,14 +25,10 @@ import com.example.projetandroid.Fragments.DatePickerFragment;
 public class MainActivity extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
 
-    public static String CURRENT_USER;
-
     private UserViewModel userViewModel;
-    private Button registerButton;
 
     private static String EMAIL_KEY = "email";
     private String email;
-    private User currentUser;
 
     private SharedPreferences preferences;
     private String sharedPrefFile = "com.example.projetandroid";
@@ -53,23 +40,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        configureViewModel();
-
-        final Observer<User> setUserObserver = new Observer<User>() {
-            @Override
-            public void onChanged(@Nullable final User newUser) {
-                currentUser = newUser;
-            }
-        };
-
-        userViewModel.getCurrentUser().observe(this, setUserObserver);
-
+        userViewModel = new UserViewModel(this);
+        UserViewModel.setINSTANCE(userViewModel);
         preferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
 
         email = preferences.getString(EMAIL_KEY, "");
 
-        //automaticUserLogin();
+        automaticUserLogin();
 
         bottomNavigationView = findViewById(R.id.bottom_navigation_login_register);
 
@@ -95,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         SharedPreferences.Editor preferencesEditor = preferences.edit();
-        preferencesEditor.putString(EMAIL_KEY, userViewModel.getCurrentUser().getValue().get_email());
+        preferencesEditor.putString(EMAIL_KEY, userViewModel.getCurrentUser().get_email());
         preferencesEditor.apply();
     }
 
@@ -139,20 +116,12 @@ public class MainActivity extends AppCompatActivity {
 
     // -------------------
 
-    private void configureViewModel() {
-        this.userViewModel = new ViewModelProvider(this, ViewModelFactory.getInstance(this)).get(UserViewModel.class);
-    }
-
     public void insertUser(User user) {
         userViewModel.insertUser(user);
     }
 
     public boolean login(String email, String password) {
         if(userViewModel.login(email, password)){
-            User user = new User();
-            user = userViewModel.getUserByEmail(email);
-            userViewModel.getCurrentUser().setValue(user);
-            Toast.makeText(MainActivity.this, userViewModel.getCurrentUser().getValue().get_email(), Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this, ConnectedActivity.class);
             startActivity(intent);
             return true;
@@ -163,9 +132,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void login(String email) {
-        User user = new User();
-        user = userViewModel.getUserByEmail(email);
-        userViewModel.getCurrentUser().setValue(user);
+        userViewModel.login(email);
         Intent intent = new Intent(this, ConnectedActivity.class);
         startActivity(intent);
 

@@ -4,6 +4,7 @@ import org.json.JSONObject;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "film_table")
@@ -22,6 +23,7 @@ public class Film {
     @ColumnInfo(name = "vote_average")
     private Float voteAverage;
 
+    @Ignore
     public Film(){}
 
     public Film(String id, String name, String img, float voteAverage){

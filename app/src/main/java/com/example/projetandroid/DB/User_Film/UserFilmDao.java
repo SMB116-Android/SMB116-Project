@@ -1,6 +1,7 @@
 package com.example.projetandroid.DB.User_Film;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
@@ -13,12 +14,15 @@ import java.util.List;
 public interface UserFilmDao {
 
     @Insert
-    void insert(User user, Film film);
+    void insert(UserFilm userFilm);
 
-    @Query("DELETE FROM userFilm_table WHERE idUser = :idUser AND idFilm = :idFilm")
-    void deleteFilm(int idUser,int idFilm);
+    @Delete
+    void delete(UserFilm userFilm);
 
     @Query("SELECT idFilm from userFilm_table ORDER BY idFilm ASC")
     List<Integer> getAllUserFilm();
+
+    @Query("SELECT * from userFilm_table WHERE idUser = :idUser AND idFilm = :idFilm")
+    UserFilm userFilmExists(int idUser, int idFilm);
 
 }

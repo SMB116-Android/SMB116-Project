@@ -9,58 +9,57 @@
     <RelativeLayout
         android:id="@+id/rellay1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="383dp"
         android:background="@drawable/grad"
         android:paddingBottom="20dp">
 
         <RelativeLayout
-            android:id="@+id/imgUser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:background="@drawable/circle_border">
+            android:background="@drawable/circle">
+
+            <LinearLayout
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="20dp"
+                android:gravity="fill_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="9dp"
+                    android:layout_marginTop="9dp"
+                    android:layout_marginEnd="9dp"
+                    android:layout_marginBottom="9dp"
+                    android:adjustViewBounds="true"
+                    android:background="@android:drawable/ic_popup_sync"
+                    android:backgroundTint="#FF0202"
+                    android:padding="3dp" />
+
+
+            </LinearLayout>
 
             <ImageView
-                android:layout_width="200dp"
-                android:layout_height="200dp"
+                android:id="@+id/imgUser"
+                android:layout_width="216dp"
+                android:layout_height="209dp"
                 android:layout_centerInParent="true"
                 android:layout_marginStart="9dp"
                 android:layout_marginTop="9dp"
                 android:layout_marginEnd="9dp"
                 android:layout_marginBottom="9dp"
                 android:adjustViewBounds="true"
-                android:background="@drawable/circle"
+                android:background="@drawable/ic_user_photo"
                 android:padding="3dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/user_photo" />
+                android:scaleType="centerInside" />
+
 
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/tv_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/imgUser"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="15sp"
-            android:fontFamily="sans-serif-light"
-            android:text="Joey Tribbiani"
-            android:textColor="@color/white"
-            android:textSize="32sp" />
-
-
-        <TextView
-            android:id="@+id/tv_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_name"
-            android:layout_centerHorizontal="true"
-            android:fontFamily="sans-serif"
-            android:text="new york, usa"
-            android:textAllCaps="true"
-            android:textColor="@color/address"
-            android:textSize="14sp" />
 
     </RelativeLayout>
 
@@ -69,83 +68,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/rellay1"
-        android:orientation="horizontal">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="@color/followersBg"
-            android:gravity="center"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:text="453K"
-                    android:textColor="@color/white"
-                    android:textSize="25sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:text="followers"
-                    android:textAllCaps="true"
-                    android:textColor="@color/white"
-                    android:textSize="13sp" />
-
-            </LinearLayout>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:background="@color/followingBg"
-            android:gravity="center"
-            android:paddingBottom="5dp"
-            android:paddingTop="5dp">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:text="873"
-                    android:textColor="@color/white"
-                    android:textSize="25sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:text="following"
-                    android:textAllCaps="true"
-                    android:textColor="@color/white"
-                    android:textSize="13sp" />
-
-            </LinearLayout>
-
-        </RelativeLayout>
-
-    </LinearLayout>
+        android:orientation="horizontal" />
 
 
     <RelativeLayout
@@ -158,8 +81,8 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
             android:layout_marginTop="20dp"
+            android:layout_marginRight="30dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -175,6 +98,7 @@
                     android:textSize="13sp" />
 
                 <TextView
+                    android:id="@+id/emailFragmentAccount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
@@ -199,24 +123,39 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Phone"
+                    android:text="Change Password"
                     android:textColor="@color/headings"
                     android:textSize="13sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:text="+1-202-555-0157"
-                    android:textColor="#000000"
-                    android:textSize="18sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/changeEditText"
+                        android:layout_width="249dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:hint="Change password"
+                        android:inputType="textPassword"
+                        android:minHeight="48dp"
+                        android:textColor="#000000"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/changeButton"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:hint="Change" />
+
+
+                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="15dp"
                     android:background="@color/grey" />
-
             </LinearLayout>
 
 

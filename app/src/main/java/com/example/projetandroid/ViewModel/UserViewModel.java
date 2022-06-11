@@ -1,6 +1,7 @@
 package com.example.projetandroid.ViewModel;
 
 import android.app.Application;
+import android.content.Context;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,81 +15,56 @@ import com.example.projetandroid.DB.Film.FilmRepository;
 import com.example.projetandroid.DB.RoomDb;
 import com.example.projetandroid.DB.User.UserRepository;
 import com.example.projetandroid.DB.User.User;
+import com.example.projetandroid.DB.User_Film.UserFilm;
+import com.example.projetandroid.DB.User_Film.UserFilmRepository;
 
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.Executor;
 
-public class UserViewModel extends ViewModel {
+public class UserViewModel extends ViewModel  {
 
-    // REPOSITORIES
+    private User currentUser;
+    private List<Film> allUserFilms;
+    private final UserRepository userRepository;
+    private final UserFilmRepository userFilmRepository;
+    private static UserViewModel INSTANCE;
 
-    private final UserRepository userDataSource;
+    public UserViewModel(Context context) {
 
-    private final FilmRepository filmDataSource;
+        RoomDb database = RoomDb.getDatabase(context);
 
-    private final Executor executor;
-
-    // DATA
-
-    @Nullable
-    private LiveData<User> currentUser;
-
-    public UserViewModel(UserRepository userDataSource, FilmRepository filmDataSource, Executor executor) {
-
-        this.userDataSource = userDataSource;
-
-        this.filmDataSource = filmDataSource;
-
-        this.executor = executor;
+        this.userRepository = new UserRepository(database.userDao());
+        this.userFilmRepository = new UserFilmRepository(database.userFilmDao());
 
     }
 
-    public void init(int userId) {
+    //USER
 
-        if (this.currentUser != null) {
-
-            return;
-
-        }
-
-        //currentUser = userDataSource.getUser(userId);
-
+    public static UserViewModel getInstance()
+    {
+        return INSTANCE;
     }
 
-    // -------------
-
-    // FOR USER
-
-    // -------------
-
-    /*
-    public LiveData<User> getUser() { return this.currentUser;  }
-
-    public void getUserByEmail(String email) {
-
-        executor.execute(() -> {
-
-            currentUser = userDataSource.getUser(email);
-
-        });
-
+    public static void setINSTANCE(UserViewModel INSTANCE) {
+        UserViewModel.INSTANCE = INSTANCE;
     }
 
-     */
+    public void insertUser(User user) {
+        userRepository.insertUser(user);
+    }
 
-    private MutableLiveData<User> currentUserM;
+    public void updatePassword(String passworrd) {
+        userRepository.updatePasswordUser(passworrd);
+    }
 
-    public MutableLiveData<User> getCurrentUser() {
-        if (currentUserM == null) {
-            currentUserM = new MutableLiveData<User>();
-        }
-        return currentUserM;
+    public User getCurrentUser() {
+        return currentUser;
     }
 
     public User getUserByEmail(String email) {
 
-        User user = userDataSource.getUser(email);
+        User user = userRepository.getUser(email);
 
         return user;
     }
@@ -96,54 +72,37 @@ public class UserViewModel extends ViewModel {
     public boolean login(String email, String password) {
 
         Boolean isGood;
-        isGood = userDataSource.checkEmailPassword(email, password);
+        isGood = userRepository.checkEmailPassword(email, password);
+
+        if(isGood){
+            currentUser = getUserByEmail(email);
+        }
 
         return isGood;
     }
 
+    public void login(String email) {
 
-    public void insertUser(User user) {
-
-        executor.execute(() -> {
-
-            userDataSource.insertUser(user);
-
-        });
-
+        currentUser = getUserByEmail(email);
     }
 
-    // -------------
+    //FILM
 
-    // FOR ITEM
-
-    // -------------
-    /*
-    public LiveData<List<Item>> getItems(long userId) {
-
-        return filmDataSource.getItems(userId);
-
+    public void insertUserFilm(int idUser, int idFilm) {
+        userFilmRepository.insertFilmInUserList(idUser, idFilm);
     }
 
-    public void createItem(String text, int category, long userId) {
-
-        executor.execute(() -> {
-
-            filmDataSource.createItem(new Item(text, category, userId));
-
-        });
-
+    public void deleteUserFilm(int idUser, int idFilm) {
+        userFilmRepository.deleteFilmInUserList(idUser, idFilm);
     }
 
-    public void deleteItem(long itemId) {
-
-        executor.execute(() -> filmDataSource.deleteItem(itemId));
-
+    public boolean userFilmAlreadyExists(int idUser, int idFilm) {
+        return userFilmRepository.userFilmAlreadyExists(idUser, idFilm);
     }
 
-    public void updateItem(Film film) {
 
-        executor.execute(() -> filmDataSource.updateItem(item));
+    public List<Integer> getAllUserFilms(int idUser) {
+        return userFilmRepository.getAllUserFilm(idUser);
     }
 
-     */
 }

@@ -3,41 +3,27 @@ package com.example.projetandroid;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.Network;
-import android.net.NetworkCapabilities;
-import android.os.AsyncTask;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
-import com.example.projetandroid.DB.Film.Film;
-import com.example.projetandroid.DB.Film.FilmRepository;
+import com.example.projetandroid.DB.User.User;
 import com.example.projetandroid.Fragments.AccountFragment;
+import com.example.projetandroid.Fragments.DatePickerFragment;
 import com.example.projetandroid.Fragments.FilmFragment;
 import com.example.projetandroid.Fragments.TrendingFragment;
+import com.example.projetandroid.ViewModel.UserViewModel;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
 public class ConnectedActivity extends AppCompatActivity {
     private static final String TAG = "ConnectedActivity";
+    private UserViewModel userViewModel;
     BottomNavigationView bottomNavigationView;
 
     TrendingFragment trendingFragment = new TrendingFragment();
@@ -48,6 +34,7 @@ public class ConnectedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connected);
+        this.userViewModel = UserViewModel.getInstance();
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
@@ -71,6 +58,10 @@ public class ConnectedActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void returnToMenu() {
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, trendingFragment).commit();
     }
 
 }

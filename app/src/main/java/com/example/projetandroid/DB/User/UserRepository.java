@@ -18,7 +18,7 @@ public class UserRepository {
     private User user;
 
     public UserRepository(UserDao userDao) {
-        this.userDao = userDao;
+       this.userDao = userDao;
     }
 
     public User getCurrentUser() {
