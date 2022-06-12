@@ -1,11 +1,11 @@
 package com.example.projetandroid.Fragments;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -13,13 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.projetandroid.Adaptery;
 import com.example.projetandroid.DB.Film.Film;
-import com.example.projetandroid.DB.User.User;
 import com.example.projetandroid.R;
 
 import org.json.JSONArray;
@@ -45,25 +46,55 @@ public class TrendingFragment extends Fragment {
     View view;
     List<Film> movieList;
     RecyclerView recyclerView;
+    private Adaptery adaptery;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_trending, container, false);
-
+        ((AppCompatActivity) getActivity()).getSupportActionBar().show();
+        setHasOptionsMenu(true);
         return view;
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         movieList = new ArrayList<>();
         recyclerView = view.findViewById(R.id.recyclerView);
 
         GetData getData = new GetData();
         getData.execute();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+        inflater.inflate(R.menu.search_menu, menu);
+        super.onCreateOptionsMenu(menu,inflater);
+
+        MenuItem searchItem = menu.findItem(R.id.actionSearch);
+
+        androidx.appcompat.widget.SearchView searchView = (androidx.appcompat.widget.SearchView) searchItem.getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filter(newText);
+                return false;
+            }
+        });
+
+    }
+
+    private void filter(String text) {
+        adaptery.filter(text);
     }
 
     public class GetData extends AsyncTask<String, String, String> {
@@ -132,7 +163,7 @@ public class TrendingFragment extends Fragment {
 
     private void PutDataIntoRecyclerView(List<Film> movieList){
 
-        Adaptery adaptery = new Adaptery(view.getContext(), movieList, communication);
+        adaptery = new Adaptery(view.getContext(), movieList, communication);
         recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
 
         recyclerView.setAdapter(adaptery);

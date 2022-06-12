@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -51,6 +52,7 @@ public class AccountFragment extends Fragment {
 
         this.userViewModel = UserViewModel.getInstance();
         view = inflater.inflate(R.layout.fragment_account, container, false);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().hide();
         connectedActivity = (ConnectedActivity) getActivity();
         imageView = view.findViewById(R.id.imgUser);
         email = view.findViewById(R.id.emailFragmentAccount);

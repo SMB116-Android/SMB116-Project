@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,17 +21,20 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.projetandroid.DB.Film.Film;
 import com.example.projetandroid.Fragments.DetailsFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Adaptery extends RecyclerView.Adapter<Adaptery.MyViewHolder> {
     private Context mContext;
     private List<Film> mData;
+    private final List<Film> mDataFilm;
     private OnFilmListener mCommunicator;
 
     public Adaptery(Context mContext, List<Film> mData, OnFilmListener communication) {
         this.mContext = mContext;
         this.mData = mData;
         mCommunicator=communication;
+        mDataFilm = mData;
     }
 
     @NonNull
@@ -66,6 +70,28 @@ public class Adaptery extends RecyclerView.Adapter<Adaptery.MyViewHolder> {
     @Override
     public int getItemCount() {
         return mData.size();
+    }
+
+    private void filterList(ArrayList<Film> filterllist) {
+        mData = filterllist;
+        notifyDataSetChanged();
+    }
+
+    public void filter(String text) {
+        ArrayList<Film> filteredlist = new ArrayList<>();
+        mData = mDataFilm;
+
+            for (Film item : mData) {
+                if (item.getName().toLowerCase().contains(text.toLowerCase())) {
+                    filteredlist.add(item);
+                }
+            }
+            if (filteredlist.isEmpty()) {
+            } else {
+                filterList(filteredlist);
+            }
+
+
     }
 
 
