@@ -142,17 +142,15 @@ public class AdapteryUserFilm extends RecyclerView.Adapter<AdapteryUserFilm.MyVi
         }
 
         public void SupprUnFilmDesAjout(){
-            Log.d("AUBO","GATE"+this.id.getText());
-            // Gaetan on rentre ici
-            //AdapteryUserFilm a = AdapteryUserFilm.getINSTANCE();
-            //a.mData.remove(getPosition(this.id.getText()))
+            mOnDeleteFilmListener.onDeleteFilmClick(mData.get(getAdapterPosition()));
+            mData.remove(getAdapterPosition());
+            notifyDataSetChanged();
         }
 
         @Override
         public void onClick(View view) {
             mOnFilmListener.onFilmClick(getAdapterPosition(),mData.get(getAdapterPosition()).getId());
         }
-
 
     }
 
@@ -161,6 +159,6 @@ public class AdapteryUserFilm extends RecyclerView.Adapter<AdapteryUserFilm.MyVi
     }
 
     public interface OnDeleteFilmListener{
-        void onDeleteFilmClick(int position, Film film);
+        void onDeleteFilmClick(Film film);
     }
 }

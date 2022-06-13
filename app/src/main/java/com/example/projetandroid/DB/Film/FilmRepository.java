@@ -38,8 +38,4 @@ public class FilmRepository {
         return filmDao.getAllUserFilm(idUser);
     }
 
-    public void deleteFilm(Film film) {
-        filmDao.delete(film);
-    }
-
 }

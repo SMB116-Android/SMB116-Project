@@ -122,8 +122,8 @@ public class FilmFragment extends Fragment {
 
     AdapteryUserFilm.OnDeleteFilmListener communicationDelete = new AdapteryUserFilm.OnDeleteFilmListener() {
         @Override
-        public void onDeleteFilmClick(int position, Film film) {
-
+        public void onDeleteFilmClick(Film film) {
+            userViewModel.deleteUserFilm(userViewModel.getCurrentUser().get_id(), Integer.parseInt(film.getId()));
         }
     };
 

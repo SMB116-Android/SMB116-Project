@@ -25,4 +25,7 @@ public interface UserFilmDao {
     @Query("SELECT * from userFilm_table WHERE idUser = :idUser AND idFilm = :idFilm")
     UserFilm userFilmExists(int idUser, int idFilm);
 
+    @Query("DELETE FROM userFilm_table WHERE idUser = :idUser AND idFilm = :idFilm")
+    void deleteUserFilm(int idUser, int idFilm);
+
 }

@@ -32,7 +32,7 @@ public class UserFilmRepository {
     }
 
     public void deleteFilmInUserList(int idUser,int idFilm) {
-        userFilmDao.delete(new UserFilm(idUser, idFilm));
+        userFilmDao.deleteUserFilm(idUser, idFilm);
     }
 
 }

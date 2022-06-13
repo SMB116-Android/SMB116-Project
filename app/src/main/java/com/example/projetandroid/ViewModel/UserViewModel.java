@@ -109,10 +109,6 @@ public class UserViewModel extends ViewModel  {
 
     }
 
-    public void deleteFilm(Film film) {
-        filmRepository.deleteFilm(film);
-    }
-
     public boolean filmAlreadyExists(int idFilm) {
         return filmRepository.userFilmAlreadyExists(idFilm);
     }
