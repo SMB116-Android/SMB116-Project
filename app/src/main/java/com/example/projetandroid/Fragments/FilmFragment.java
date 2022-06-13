@@ -1,6 +1,5 @@
 package com.example.projetandroid.Fragments;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -19,23 +18,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.projetandroid.Adaptery;
 import com.example.projetandroid.AdapteryUserFilm;
 import com.example.projetandroid.DB.Film.Film;
 import com.example.projetandroid.R;
 import com.example.projetandroid.ViewModel.UserViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,7 +53,7 @@ public class FilmFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         movieList = new ArrayList<>();
         recyclerView = view.findViewById(R.id.recyclerViewUserFilm);
-        delete = view.findViewById(R.id.floatingDeleteButton);
+        delete = view.findViewById(R.id.floatingDeleteButto);
         int idUser = userViewModel.getCurrentUser().get_id();
         getAllUserFilm(userViewModel.getAllUserFilms(idUser));
 

@@ -35,6 +35,16 @@
         <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/menu/login_register_menu.xml" value="0.18802083333333333" />
         <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/menu/menu_user_connected.xml" value="0.18802083333333333" />
         <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/menu/search_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Augus/OneDrive/Documents/CNAM/SMB116-Project/app/src/main/res/layout/activity_connected.xml" value="0.3171875" />
+        <entry key="..\:/Users/Augus/OneDrive/Documents/CNAM/SMB116-Project/app/src/main/res/layout/activity_main.xml" value="0.3171875" />
+        <entry key="..\:/Users/Augus/OneDrive/Documents/CNAM/SMB116-Project/app/src/main/res/layout/fragment_account.xml" value="0.3171875" />
+        <entry key="..\:/Users/Augus/OneDrive/Documents/CNAM/SMB116-Project/app/src/main/res/layout/fragment_details.xml" value="0.3171875" />
+        <entry key="..\:/Users/Augus/OneDrive/Documents/CNAM/SMB116-Project/app/src/main/res/layout/fragment_film.xml" value="0.3171875" />
+        <entry key="..\:/Users/Augus/OneDrive/Documents/CNAM/SMB116-Project/app/src/main/res/layout/fragment_login.xml" value="0.3171875" />
+        <entry key="..\:/Users/Augus/OneDrive/Documents/CNAM/SMB116-Project/app/src/main/res/layout/fragment_register.xml" value="0.3171875" />
+        <entry key="..\:/Users/Augus/OneDrive/Documents/CNAM/SMB116-Project/app/src/main/res/layout/fragment_trending.xml" value="0.3171875" />
+        <entry key="..\:/Users/Augus/OneDrive/Documents/CNAM/SMB116-Project/app/src/main/res/layout/movie_item.xml" value="0.3171875" />
+        <entry key="..\:/Users/Augus/OneDrive/Documents/CNAM/SMB116-Project/app/src/main/res/layout/movie_item_user_list.xml" value="0.3171875" />
         <entry key="..\:/Users/MyST3/AndroidStudioProjects/SMB116-Project/app/src/main/res/drawable/baseline_manage_accounts_24.xml" value="0.14635416666666667" />
         <entry key="..\:/Users/MyST3/AndroidStudioProjects/SMB116-Project/app/src/main/res/drawable/baseline_movie_24.xml" value="0.14635416666666667" />
         <entry key="..\:/Users/MyST3/AndroidStudioProjects/SMB116-Project/app/src/main/res/drawable/baseline_trending_up_24.xml" value="0.14635416666666667" />

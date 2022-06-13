@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -114,6 +114,7 @@ public class AdapteryUserFilm extends RecyclerView.Adapter<AdapteryUserFilm.MyVi
         FloatingActionButton floatingActionButtonDelete;
         OnFilmListener mOnFilmListener;
         OnDeleteFilmListener mOnDeleteFilmListener;
+        Button btnDelete;
 
         private Context context;
 
@@ -125,30 +126,27 @@ public class AdapteryUserFilm extends RecyclerView.Adapter<AdapteryUserFilm.MyVi
             date = itemView.findViewById(R.id.tvDate);
             overview = itemView.findViewById(R.id.tvOverview);
             ratingBar = itemView.findViewById(R.id.ratingBar);
-            floatingActionButtonDelete = itemView.findViewById(R.id.floatingDeleteButton);
+            floatingActionButtonDelete = itemView.findViewById(R.id.floatingDeleteButto);
             context = itemView.getContext();
             mOnDeleteFilmListener = onDeleteFilmListener;
             mOnFilmListener=Communicator;
             itemView.setClickable(true);
             itemView.setOnClickListener(this);
 
-        }
-
-        @Override
-        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-            holder.bind(mData.get(position), mOnDeleteFilmListener);
-        }
-
-        public void bind(final Film film, final AdapterView.OnItemClickListener listener) {
-
-            floatingActionButtonDelete.setOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View v) {
-                    listener.onItemClick(film);
+            floatingActionButtonDelete.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    SupprUnFilmDesAjout();
                 }
             });
         }
 
-
+        public void SupprUnFilmDesAjout(){
+            Log.d("AUBO","GATE"+this.id.getText());
+            // Gaetan on rentre ici
+            //AdapteryUserFilm a = AdapteryUserFilm.getINSTANCE();
+            //a.mData.remove(getPosition(this.id.getText()))
+        }
 
         @Override
         public void onClick(View view) {
