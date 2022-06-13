@@ -4,15 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#3F51B5"
     tools:context=".Fragments.FilmFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Movie Fragment"
-        android:textSize="25dp"
-        android:layout_centerInParent="true"
-        />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewUserFilm"
+        layout_constraintBottom_toBottomOf="parent"
+        layout_constraintEnd_toEndOf="parent"
+        layout_constraintStart_toStartOf="parent"
+        layout_constraintTop_toTopOf="parent"
+        android:layout_width="409dp"
+        android:layout_height="729dp"
+        android:paddingTop="40dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 </RelativeLayout>

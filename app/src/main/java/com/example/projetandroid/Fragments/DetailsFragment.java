@@ -99,6 +99,7 @@ public class DetailsFragment extends Fragment {
             {
                 if(!userViewModel.userFilmAlreadyExists(userViewModel.getCurrentUser().get_id(), Integer.parseInt(mFilm.getId()))){
                     userViewModel.insertUserFilm(userViewModel.getCurrentUser().get_id(), Integer.parseInt(mFilm.getId()));
+                    userViewModel.inserFilm(mFilm);
                     Toast.makeText(connectedActivity, "Film added !", Toast.LENGTH_LONG).show();
                     connectedActivity.returnToMenu();
                 }else{

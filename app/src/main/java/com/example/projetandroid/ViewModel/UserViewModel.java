@@ -28,6 +28,7 @@ public class UserViewModel extends ViewModel  {
     private List<Film> allUserFilms;
     private final UserRepository userRepository;
     private final UserFilmRepository userFilmRepository;
+    private final FilmRepository filmRepository;
     private static UserViewModel INSTANCE;
 
     public UserViewModel(Context context) {
@@ -35,6 +36,7 @@ public class UserViewModel extends ViewModel  {
         RoomDb database = RoomDb.getDatabase(context);
 
         this.userRepository = new UserRepository(database.userDao());
+        this.filmRepository = new FilmRepository(database.filmDao());
         this.userFilmRepository = new UserFilmRepository(database.userFilmDao());
 
     }
@@ -100,9 +102,24 @@ public class UserViewModel extends ViewModel  {
         return userFilmRepository.userFilmAlreadyExists(idUser, idFilm);
     }
 
+    public void inserFilm(Film film) {
+        if(!filmAlreadyExists(Integer.parseInt(film.getId()))){
+            filmRepository.insertFilm(film);
+        }
 
-    public List<Integer> getAllUserFilms(int idUser) {
-        return userFilmRepository.getAllUserFilm(idUser);
+    }
+
+    public void deleteFilm(Film film) {
+        filmRepository.deleteFilm(film);
+    }
+
+    public boolean filmAlreadyExists(int idFilm) {
+        return filmRepository.userFilmAlreadyExists(idFilm);
+    }
+
+
+    public List<Film> getAllUserFilms(int idUser) {
+        return filmRepository.getAllUserFilm(idUser);
     }
 
 }

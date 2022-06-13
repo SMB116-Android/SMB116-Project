@@ -19,6 +19,7 @@
         <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/layout/activity_main.xml" value="0.18802083333333333" />
         <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/layout/fragment_account.xml" value="0.33" />
         <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/layout/fragment_details.xml" value="0.25" />
+        <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/layout/fragment_film.xml" value="0.18854166666666666" />
         <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/layout/fragment_login.xml" value="0.18802083333333333" />
         <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/layout/fragment_movie.xml" value="0.18802083333333333" />
         <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/layout/fragment_movie_details.xml" value="0.18802083333333333" />
@@ -28,6 +29,8 @@
         <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/layout/layout_register.xml" value="0.18802083333333333" />
         <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/layout/movie_details.xml" value="0.31023550724637683" />
         <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/layout/movie_item.xml" value="0.31023550724637683" />
+        <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/layout/movie_itemUserList.xml" value="0.18854166666666666" />
+        <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/layout/movie_item_user_list.xml" value="0.33" />
         <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/menu/bottom_nav_menu.xml" value="0.18802083333333333" />
         <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/menu/login_register_menu.xml" value="0.18802083333333333" />
         <entry key="..\:/Android_Project/SMB116-Project/app/src/main/res/menu/menu_user_connected.xml" value="0.18802083333333333" />

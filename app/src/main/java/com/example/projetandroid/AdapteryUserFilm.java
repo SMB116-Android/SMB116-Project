@@ -6,10 +6,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,27 +20,29 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.projetandroid.DB.Film.Film;
 import com.example.projetandroid.Fragments.DetailsFragment;
-import com.example.projetandroid.ViewModel.UserViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Adaptery extends RecyclerView.Adapter<Adaptery.MyViewHolder> {
+public class AdapteryUserFilm extends RecyclerView.Adapter<AdapteryUserFilm.MyViewHolder> {
     private Context mContext;
     private List<Film> mData;
     private final List<Film> mDataFilm;
     private OnFilmListener mCommunicator;
-    private static Adaptery INSTANCE;
+    private OnDeleteFilmListener mCommunicatorDelete;
+    private static AdapteryUserFilm INSTANCE;
 
-    public Adaptery(Context mContext, List<Film> mData, OnFilmListener communication) {
+    public AdapteryUserFilm(Context mContext, List<Film> mData, OnFilmListener communication, OnDeleteFilmListener onDeleteFilmListener) {
         this.mContext = mContext;
         this.mData = mData;
         mCommunicator=communication;
+        mCommunicatorDelete = onDeleteFilmListener;
         mDataFilm = mData;
         INSTANCE = this;
     }
 
-    public static Adaptery getINSTANCE() {
+    public static AdapteryUserFilm getINSTANCE() {
         return INSTANCE;
     }
 
@@ -49,9 +51,9 @@ public class Adaptery extends RecyclerView.Adapter<Adaptery.MyViewHolder> {
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v;
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        v = inflater.inflate(R.layout.movie_item, parent, false);
+        v = inflater.inflate(R.layout.movie_item_user_list, parent, false);
 
-        return new MyViewHolder(v, mCommunicator);
+        return new MyViewHolder(v, mCommunicator , mCommunicatorDelete);
     }
 
     @Override
@@ -109,11 +111,13 @@ public class Adaptery extends RecyclerView.Adapter<Adaptery.MyViewHolder> {
         TextView date;
         TextView overview;
         RatingBar ratingBar;
+        FloatingActionButton floatingActionButtonDelete;
         OnFilmListener mOnFilmListener;
+        OnDeleteFilmListener mOnDeleteFilmListener;
 
         private Context context;
 
-        public MyViewHolder(@NonNull View itemView, OnFilmListener Communicator) {
+        public MyViewHolder(@NonNull View itemView, OnFilmListener Communicator, OnDeleteFilmListener onDeleteFilmListener) {
             super(itemView);
             id = itemView.findViewById(R.id.id_txt);
             name = itemView.findViewById(R.id.tvName);
@@ -121,7 +125,9 @@ public class Adaptery extends RecyclerView.Adapter<Adaptery.MyViewHolder> {
             date = itemView.findViewById(R.id.tvDate);
             overview = itemView.findViewById(R.id.tvOverview);
             ratingBar = itemView.findViewById(R.id.ratingBar);
+            floatingActionButtonDelete = itemView.findViewById(R.id.floatingDeleteButton);
             context = itemView.getContext();
+            mOnDeleteFilmListener = onDeleteFilmListener;
             mOnFilmListener=Communicator;
             itemView.setClickable(true);
             itemView.setOnClickListener(this);
@@ -129,12 +135,34 @@ public class Adaptery extends RecyclerView.Adapter<Adaptery.MyViewHolder> {
         }
 
         @Override
+        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+            holder.bind(mData.get(position), mOnDeleteFilmListener);
+        }
+
+        public void bind(final Film film, final AdapterView.OnItemClickListener listener) {
+
+            floatingActionButtonDelete.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                    listener.onItemClick(film);
+                }
+            });
+        }
+
+
+
+        @Override
         public void onClick(View view) {
             mOnFilmListener.onFilmClick(getAdapterPosition(),mData.get(getAdapterPosition()).getId());
         }
+
+
     }
 
     public interface OnFilmListener{
         void onFilmClick(int position, String id);
+    }
+
+    public interface OnDeleteFilmListener{
+        void onDeleteFilmClick(int position, Film film);
     }
 }
